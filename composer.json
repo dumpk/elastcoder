@@ -1,0 +1,21 @@
+{
+    "name": "dumpk/elastcoder",
+    "description": "AWS Elastic Transcoder Service Integration",
+    "keywords": ["laravel", "aws", "transcoder", "amazon elastic transcoder"],
+    "require": {
+        "aws/aws-sdk-php": "~3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolás Bistolfi",
+            "email": "nbistolfi@gmail.com"
+        }
+    ],
+    "autoload": {
+		"psr-4": {
+            "Dumpk\\Elastcoder\\": "src/"
+		}
+	},
+    "minimum-stability": "dev"
+}
