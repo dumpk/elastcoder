@@ -1,9 +1,12 @@
-<?php namespace Dumpk\Elastcoder;
+<?php
+
+namespace Dumpk\Elastcoder;
 
 use Aws\S3\S3Client;
 use Aws\ElasticTranscoder\ElasticTranscoderClient;
 
-class ElastcoderAWS {
+class ElastcoderAWS
+{
     private $etc;
 
     public function __construct()
@@ -15,9 +18,9 @@ class ElastcoderAWS {
     {
         $config = array(
             'version' => 'latest',
-            'key'     => env('AWS_ACCESS_KEY_ID', ''),
-            'secret'  => env('AWS_SECRET_ACCESS_KEY', ''),
-            'region'  => env('AWS_REGION', ''),
+            'key' => env('AWS_ACCESS_KEY_ID', ''),
+            'secret' => env('AWS_SECRET_ACCESS_KEY', ''),
+            'region' => env('AWS_REGION', ''),
             'timeout' => 3,
         );
 
@@ -29,6 +32,7 @@ class ElastcoderAWS {
         if (!isset($this->s3c)) {
             $this->s3c = new S3Client($this->_getConfig());
         }
+
         return $this->s3c;
     }
 
@@ -43,7 +47,7 @@ class ElastcoderAWS {
 
     public function transcodeVideo($inputKey, $destinationKey, $config, $thumbPattern = null)
     {
-        $presetId   = $config['PresetId'];
+        $presetId = $config['PresetId'];
         $pipelineId = $config['PipelineId'];
         $watermarks = null;
 
@@ -52,8 +56,8 @@ class ElastcoderAWS {
         );
 
         $output = array(
-            'Key'               => $destinationKey,
-            'PresetId'          => $presetId,
+            'Key' => $destinationKey,
+            'PresetId' => $presetId,
         );
 
         if ($thumbPattern) {
@@ -70,6 +74,7 @@ class ElastcoderAWS {
         );
 
         $result = $this->etc->createJob($job_config);
+
         return $result['Job'];
     }
 
@@ -79,7 +84,7 @@ class ElastcoderAWS {
         if (isset($result['Job'])) {
             return $result['Job'];
         } else {
-            return null;
+            return;
         }
     }
 
@@ -87,16 +92,17 @@ class ElastcoderAWS {
     {
         $s3c = $this->_s3c();
         $object = null;
-        if ($s3c->doesObjectExist($bucket,$key)) {
+        if ($s3c->doesObjectExist($bucket, $key)) {
             $object = $s3c->getObject(array('Bucket' => $bucket, 'Key' => $key));
         }
+
         return $object;
     }
 
     public function objectExists($key, $bucket)
     {
         $s3c = $this->_s3c();
-        if ($s3c->doesObjectExist($bucket,$key)) {
+        if ($s3c->doesObjectExist($bucket, $key)) {
             return true;
         } else {
             return false;
@@ -109,17 +115,17 @@ class ElastcoderAWS {
     }
 
     /**
-    * setObjectACL
-    * Change the access level of an object on S3
-    *
-    * @param $key
-    * @param $bucket
-    * @param $acl (private|public-read|public-read-write|authenticated-read|bucket-owner-read|bucket-owner-full-control)
-    */
+     * setObjectACL
+     * Change the access level of an object on S3.
+     *
+     * @param $key
+     * @param $bucket
+     * @param $acl (private|public-read|public-read-write|authenticated-read|bucket-owner-read|bucket-owner-full-control)
+     */
     public function setObjectACL($key, $bucket, $acl = 'public-read')
     {
         $s3c = $this->_s3c();
-        if ($s3c->doesObjectExist($bucket,$key)) {
+        if ($s3c->doesObjectExist($bucket, $key)) {
             $result = $s3c->putObjectAcl(array(
                 'ACL' => $acl,
                 'Bucket' => $bucket,
@@ -129,7 +135,7 @@ class ElastcoderAWS {
                 return true;
             }
         }
+
         return false;
     }
-
 }
