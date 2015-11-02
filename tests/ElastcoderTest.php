@@ -17,12 +17,12 @@ class ElastcoderTest extends PHPUnit_Framework_TestCase {
         foreach($list['Jobs'] as $job) {
             $this->_checkJobStructure($job);
         }*/
-
-        if ($elastcoder->objectExists(getenv('KEY'), getenv('BUCKET'))) {
-            $elastcoder->deleteObject(getenv('KEY'), getenv('BUCKET'));
-        }
-        if ($elastcoder->objectExists(getenv('DESTINATION_KEY'), getenv('DESTINATION_BUCKET'))) {
-            $elastcoder->deleteObject(getenv('DESTINATION_KEY'), getenv('DESTINATION_BUCKET'));
+        $destination_key = time().'-'.getenv('DESTINATION_KEY');
+        // if ($elastcoder->objectExists(getenv('KEY'), getenv('BUCKET'))) {
+            // $elastcoder->deleteObject(getenv('KEY'), getenv('BUCKET'));
+        // }
+        if ($elastcoder->objectExists($destination_key, getenv('DESTINATION_BUCKET'))) {
+            $elastcoder->deleteObject($destination_key, getenv('DESTINATION_BUCKET'));
         }
         $uploadResult = $elastcoder->uploadFile(getenv('LOCAL_FILE'), getenv('KEY'), getenv('BUCKET'));
 
@@ -37,7 +37,7 @@ class ElastcoderTest extends PHPUnit_Framework_TestCase {
 			'ext'	 => 'mp4',
 			'PipelineId' => getenv('PIPELINE_ID'),
         ];
-        $job = $elastcoder->transcodeVideo(getenv('KEY'), getenv('DESTINATION_KEY'),  $config);
+        $job = $elastcoder->transcodeVideo(getenv('KEY'), $destination_key,  $config);
         $this->_checkJobStructure($job);
         $count = 0;
         do {
@@ -47,12 +47,12 @@ class ElastcoderTest extends PHPUnit_Framework_TestCase {
         } while($job['Status'] == 'Submitted' || $count < 5);
         $jobOK = FALSE;
         if (strtolower($job['Status']) == 'complete') {
-            $elastcoder->setPublicObject(getenv('DESTINATION_KEY'), getenv('DESTINATION_BUCKET'));
+            $elastcoder->setPublicObject($destination_key, getenv('DESTINATION_BUCKET'));
             $jobOK = TRUE;
         }
         $this->assertTrue($jobOK, 'Transcoding job completed');
-        $object = $elastcoder->getObject(getenv('DESTINATION_KEY'), getenv('DESTINATION_BUCKET'));
-        var_dump($object['@metadata']['effectiveUri']);
+        $object = $elastcoder->getObject($destination_key, getenv('DESTINATION_BUCKET'));
+        echo $object['@metadata']['effectiveUri'];
 	}
 
     private function _checkJobStructure($job) {
