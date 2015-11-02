@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="true"
+         syntaxCheck="false">
+    <testsuites>
+        <testsuite name="Versionable Suite">
+            <directory>tests/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="AWS_ACCESS_KEY_ID" value="[[YOUR ACCESS KEY]]" />
+        <env name="AWS_SECRET_ACCESS_KEY" value="[[YOUR SECRET KEY]]" />
+        <env name="AWS_REGION" value="us-west-2" />
+
+        <env name="PIPELINE_ID" value="[[CREATE A PIPELINE ON AWS ELASTIC TRANSCODER]]" />
+        <env name="PRESET_ID"   value="1351620000001-000061" />
+
+        <env name="LOCAL_FILE"  value="videos/guida.mp4" />
+        <env name="KEY"         value="tests/guida.mp4" />
+        <env name="BUCKET"      value="[[YOUR BUCKET]]" />
+        <env name="DESTINATION_KEY" value="tests/guida_encoded.mp4" />
+        <env name="DESTINATION_BUCKET"  value="[[YOUR BUCKET]]" />
+    </php>
+</phpunit>

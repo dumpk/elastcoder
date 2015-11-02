@@ -4,3 +4,5 @@
 .env
 
 /vendor/
+phpunit.local.xml
+composer.lock

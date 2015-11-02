@@ -45,6 +45,19 @@ class ElastcoderAWS
         ]);
     }
 
+    public function uploadFile($localPath, $key, $bucket, $acl = 'public-read', $metadata = array(), $cache = 'max-age=3600', $extraOptions = array()) {
+        $s3c = $this->_s3c();
+        $objectOptions = [
+            'ACL'           => $acl,
+            'Bucket'        => $bucket,
+            'Key'           => $key,
+            'CacheControl'  => $cache,
+            'SourceFile'    => $localPath,
+        ];
+        $result = $s3c->putObject(array_merge($objectOptions, $extraOptions));
+        return $result;
+    }
+
     public function transcodeVideo($inputKey, $destinationKey, $config, $thumbPattern = null)
     {
         $presetId = $config['PresetId'];
@@ -97,6 +110,20 @@ class ElastcoderAWS
         }
 
         return $object;
+    }
+
+    public function deleteObject($key, $bucket)
+    {
+        $s3c = $this->_s3c();
+        $params = [
+            'Bucket' => $bucket,
+            'Key'    => $key,
+        ];
+        if ($s3c->deleteObject($params)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function objectExists($key, $bucket)
