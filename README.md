@@ -1,4 +1,5 @@
 # Elastcoder
+[![Build Status](https://travis-ci.org/dumpk/elastcoder.svg?branch=master)](https://travis-ci.org/dumpk/elastcoder)
 AWS Elastic Transcoder integration for Laravel. This is a simple wrapper if you don't want to go too deep with the [AWS SDK for PHP 3.x](http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html)!.
 
 ## Installation
