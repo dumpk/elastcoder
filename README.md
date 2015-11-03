@@ -40,12 +40,12 @@ The configuration has to look like:
 ```php
 
 $config = [
-    'PresetId' => '',
+    'PresetId' => '432423-dsda',
     'width'  => 1920,
     'height' => 1080,
     'aspect' => '16:9',
 	'ext'	 => 'mp4',
-	'PipelineId' => '14340594502-n2fuqq4',
+	'PipelineId' => '343244232-n2fuqq4',
     'Watermarks' => [[
             'PresetWatermarkId' => 'BottomRight',
             'InputKey'          => '1080.png',
