@@ -24,20 +24,20 @@ AWS_REGION={YOURREGION}
 ## Usage
 
 Add the ElastcoderAWS class to your class header
-```
+```php
 use Dumpk\Elastcoder\ElastcoderAWS;
 ```
 
 Now you just need to instance your class
 
-```
+```php
 $elastcoder = new ElastcoderAWS();
 ```
 
 You'll need to have your video uploaded to S3 before using this library, so that means that you already have the key for the file you want to encode.
 The configuration has to look like:
 
-```
+```php
 
 $config = [
     'PresetId' => '',
@@ -58,27 +58,27 @@ There's an example file you can throw in on your config folder in dumpk/elastcod
 
 So now you can call the transcoding function:
 
-```
+```php
 $job = $elastcoder->transcodeVideo($asset->key, $destinationKey, $config, $thumbPattern);
 
 ```
 
 This will return a job with an array, where you can find the "Id" of the Job, you'll need to check the job for completeness to know if your video is ready. Buy you already know that, so for your convienience you can use:
 
-```
+```php
 $job = $elastcoder->getJob($job["Id"]);
 
 ```
 And check if $job['Status'] == 'complete'
 
 Also you can change the ACL of your file, because you might want to give access to everyone to see your amazing video, so:
-```
+```php
 $elastcoder->setPublicObject($key, $bucket);
 
 ```
 
 If you want to be more specific about that and have different types of permissions, you can use:
-```
+```php
 $elastcoder->setObjectACL($key, $bucket, $acl);
 
 ```
