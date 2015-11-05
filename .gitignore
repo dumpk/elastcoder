@@ -1,8 +1,9 @@
-/bootstrap/compiled.php
-.env.*.php
-.env.php
-.env
-
-/vendor/
-phpunit.local.xml
+composer.phar
 composer.lock
+coverage.xml
+.DS_Store
+Thumbs.db
+/vendor
+/.idea
+
+phpunit.local.xml
