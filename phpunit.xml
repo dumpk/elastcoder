@@ -10,7 +10,7 @@
          stopOnFailure="true"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="Versionable Suite">
+        <testsuite name="Elastcoder Test Suite">
             <directory>tests/</directory>
         </testsuite>
     </testsuites>
