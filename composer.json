@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "aws/aws-sdk-php" : "~3.0",
-        "dumpk/esetres" : "0.9"
+        "dumpk/esetres": "0.9"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
