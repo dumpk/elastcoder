@@ -5,12 +5,13 @@
     "homepage": "http://github.com/dumpk/elastcoder",
     "license": "MIT",
     "require": {
-        "aws/aws-sdk-php": "~3.0"
+        "aws/aws-sdk-php" : "~3.0",
+        "dumpk/esetres" : "0.9"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
-        "laravel/laravel": "dev-develop"
+        "laravel/laravel": "~5.1"
     },
     "authors": [
         {
