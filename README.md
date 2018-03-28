@@ -48,9 +48,13 @@ $config = [
 	'ext'	 => 'mp4',
 	'PipelineId' => '343244232-n2fuqq4',
     'Watermarks' => [[
-            'PresetWatermarkId' => 'BottomRight',
-            'InputKey'          => '1080.png',
+        'PresetWatermarkId' => 'BottomRight',
+        'InputKey'          => '1080.png',
     ]],
+    'TimeSpan' => [
+        'StartTime' => '0.4',
+        'Duration'  => '5.3'
+    ],
 ]
 
 ```

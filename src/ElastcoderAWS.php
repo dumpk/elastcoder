@@ -47,6 +47,10 @@ class ElastcoderAWS
             'Key' => $inputKey,
         );
 
+        if (isset($config['TimeSpan'])) {
+            $input['TimeSpan'] = $config['TimeSpan'];
+        }
+
         $output = array(
             'Key' => $destinationKey,
             'PresetId' => $presetId,
