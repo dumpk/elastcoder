@@ -13,6 +13,14 @@ Require this package with composer:
 ```
 composer require dumpk/elastcoder
 ```
+Add the service provider to your config/app.php file:
+```
+Dumpk\Elastcoder\ElastcoderServiceProvider::class
+```
+Publish config file by running :
+```
+php artisan vendor:publish --tag=elastcoder
+```
 
 Add this variables to your .env with your Amazon credentials
 
@@ -66,6 +74,10 @@ So now you can call the transcoding function:
 ```php
 $job = $elastcoder->transcodeVideo($asset->key, $destinationKey, $config, $thumbPattern);
 
+```
+You can also transcode audio files like so :
+```
+$job = $elastcoder->transcodeAudio($inputfile,$uotputfile,$artwork)
 ```
 
 This will return a job with an array, where you can find the "Id" of the Job, you'll need to check the job for completeness to know if your video is ready. Buy you already know that, so for your convienience you can use:

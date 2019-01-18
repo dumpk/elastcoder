@@ -74,6 +74,54 @@ class ElastcoderAWS
         return $result['Job'];
     }
 
+
+    /**
+     * Transcode Audio files
+     * @param $inputFile
+     * @param $outputFile
+     * @param $artwork
+     * @return mixed
+     */
+    public function transcodeAudio($inputFile, $outputFile, $artwork = '')
+    {
+
+
+        $input = [
+            'Key' => $inputFile,
+            //for clipping audio file
+            'TimeSpan' => [
+                'StartTime' => config('elascoder.audio.StartTime'),
+                'Duration' => config('elastcoder.audio.Duration')
+            ]
+        ];
+
+        $output = [
+            'Key' => $outputFile, //name of your transcoded file
+            'PresetId' => config('elastcoder.audio.PresetId'),
+        ];
+
+        $albumArt = [
+            'AlbumArtMerge' => config('elastcoder.audio.AlbumArtMerge'),
+            'AlbumArtArtwork' =>[
+                'AlbumArtInputKey' => $artwork, //image you want to use as album art
+                'AlbumArtMaxWidth' => config('elastcoder.audio.AlbumArtMaxWidth'),
+                'AlbumArtMaxHeight' => config('elastcoder.audio.AlbumArtMaxHeight'),
+                'AlbumArtSizingPolicy' => config('elastcoder.audio.AlbumArtSizingPolicy')
+            ]
+        ];
+
+        $job = [
+            'PipelineId' => config('elastcoder.audio.PipelineId'),
+            'Input' => $input,
+            'Output' => $output,
+            'AlbumArt' => $albumArt
+        ];
+
+        $result = $this->etc->createJob($job);
+
+        return $result['Job'];
+    }
+
     public function getJob($job_id)
     {
         $result = $this->etc->readJob(array('Id' => $job_id));
